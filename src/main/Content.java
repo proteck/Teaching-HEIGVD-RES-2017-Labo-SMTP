@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Content of a mail which is selected randomly
  *
  * @author Maxime Guillod
  */
@@ -33,6 +34,11 @@ public final class Content {
         updateContent();
     }
 
+    /**
+     * Get the subject for the mail. It correspond of the file name witout extension
+     *
+     * @return
+     */
     public String getSubject() {
         return file.getName().replace(".txt", "");
     }
@@ -40,7 +46,7 @@ public final class Content {
     public ArrayList<String> getContent() {
         return content;
     }
-    
+
     /**
      * Update the content
      *

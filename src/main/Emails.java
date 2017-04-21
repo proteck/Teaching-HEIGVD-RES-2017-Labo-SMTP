@@ -11,11 +11,11 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
+ * List of all mails adresse store in a file
  *
  * @author Maxime Guillod
  */
 public class Emails {
-
 
     private final Queue<String> emails;
 
@@ -33,7 +33,7 @@ public class Emails {
         } catch (IOException ex) {
             System.err.println("Error i/o");
         }
-        
+
         // on randomise pour l'ajout dans notre liste
         Collections.shuffle(tmpMail);
         tmpMail.forEach((email) -> {

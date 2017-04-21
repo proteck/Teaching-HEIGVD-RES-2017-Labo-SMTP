@@ -28,12 +28,16 @@ public class Launcher {
             Mail mail;
             Group group;
             while (true) {
+                // select a new group
                 group = emails.pollGroup();
                 if (!group.isValide()) {
                     break;
                 }
+                // update the content
                 content.update();
+                // init the mail
                 mail = new Mail(group, content);
+                // send it
                 connection.send(mail);
                 
                 // Avoid to receive many mail in the same seconde

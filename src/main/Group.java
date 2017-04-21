@@ -4,6 +4,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
+ * Group for a sending (one sender, and many receiver)
  *
  * @author Maxime Guillod
  */
