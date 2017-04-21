@@ -6,12 +6,12 @@ import java.util.Queue;
 
 /**
  *
- * @author Maxime
+ * @author Maxime Guillod
  */
 public class Mail {
 
-    private Group group;
-    private Content content;
+    private final Group group;
+    private final Content content;
 
     public Mail(Group victim, Content content) {
         this.group = victim;

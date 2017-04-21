@@ -11,10 +11,13 @@ import java.net.Socket;
  *
  * @author Maxime Guillod
  */
-public class Connection extends Socket {
+public class Connection extends Socket implements ICommunictionSmtp {
 
-    BufferedReader in;
-    BufferedWriter out;
+    public static final String SEND_FORM = " >>> ";
+    public static final String RECV_FORM = " <<< ";
+
+    private final BufferedReader in;
+    private final BufferedWriter out;
 
     public Connection(String host, int port) throws IOException {
         super(host, port);
@@ -26,26 +29,26 @@ public class Connection extends Socket {
     }
 
     public void send(Mail mail) throws IOException {
-        send("EHLO maxime");
+        send(HELLO);
         readLine();
         readLine();
         readLine();
 
         while (!mail.getReceiver().isEmpty()) {
-            send("MAIL FROM: " + mail.getSender());
+            send(MAIL_FROM + mail.getSender());
             readLine();
-            send("RCPT TO: " + mail.getReceiver().peek());
+            send(MAIL_RCP + mail.getReceiver().peek());
             readLine();
-            send("DATA");
+            send(DATA);
             readLine();
-            send("From:" + mail.getSender());
-            send("To:" + mail.getReceiver().poll());
-            send("Subject:" + mail.getSubject());
-            send("");
+            send(HEADER_FROM + mail.getSender());
+            send(HEADER_TO + mail.getReceiver().poll());
+            send(HEADER_SUBJECT + mail.getSubject());
+            send(HEADER_END);
             for (String line : mail.getContent()) {
                 send(line);
             }
-            send(".");
+            send(END_DATA);
             readLine();
         }
 
@@ -54,11 +57,11 @@ public class Connection extends Socket {
     private void send(String content) throws IOException {
         out.write(content + "\r\n");
         out.flush();
-        System.out.println(" >>> " + content);
+        System.out.println(SEND_FORM + content);
     }
 
     private void readLine() throws IOException {
-        System.out.println(" <<< " + in.readLine());
+        System.out.println(RECV_FORM + in.readLine());
     }
 
 }
