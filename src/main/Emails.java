@@ -4,10 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -15,25 +16,29 @@ import java.util.logging.Logger;
  */
 public class Emails {
 
-    private static final int DEFAULT_SIZE_GROUP = 3;
 
     private final Queue<String> emails;
 
     public Emails(String loadPath) {
         this.emails = new LinkedBlockingDeque<>();
+        List<String> tmpMail = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(loadPath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                emails.add(line);
+                tmpMail.add(line);
             }
         } catch (FileNotFoundException ex) {
             System.err.println("File not found");
-            Logger.getLogger(Emails.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             System.err.println("Error i/o");
-            Logger.getLogger(Emails.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        // on randomise pour l'ajout dans notre liste
+        Collections.shuffle(tmpMail);
+        tmpMail.forEach((email) -> {
+            emails.add(email);
+        });
     }
 
     public int getNumberMails() {
@@ -45,7 +50,7 @@ public class Emails {
      * @return
      */
     public Group pollGroup() {
-        return pollGroup(DEFAULT_SIZE_GROUP);
+        return pollGroup(Launcher.DEFAULT_SIZE_GROUP);
     }
 
     /**

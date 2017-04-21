@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Maxime Guillod
  */
-public class Content {
+public final class Content {
 
     String folderPath = null;
     ArrayList<String> content;
