@@ -18,24 +18,47 @@ public class Connection extends Socket {
 
     public Connection(String host, int port) throws IOException {
         super(host, port);
-        in = new BufferedReader(
-                new InputStreamReader(getInputStream()));
         out = new BufferedWriter(
                 new OutputStreamWriter(getOutputStream()));
-    }
-
-    public void send(Mail mail) throws IOException {
-        send("HELO world");
+        in = new BufferedReader(
+                new InputStreamReader(getInputStream()));
         readLine();
     }
 
+    public void send(Mail mail) throws IOException {
+        send("EHLO maxime");
+        readLine();
+        readLine();
+        readLine();
+
+        while (!mail.getReceiver().isEmpty()) {
+            send("MAIL FROM: " + mail.getSender());
+            readLine();
+            send("RCPT TO: " + mail.getReceiver().peek());
+            readLine();
+            send("DATA");
+            readLine();
+            send("From:" + mail.getSender());
+            send("To:" + mail.getReceiver().poll());
+            send("Subject:" + mail.getSubject());
+            send("");
+            for (String line : mail.getContent()) {
+                send(line);
+            }
+            send(".");
+            readLine();
+        }
+
+    }
+
     private void send(String content) throws IOException {
-        out.write(content + '\n');
+        out.write(content + "\r\n");
         out.flush();
+        System.out.println(" >>> " + content);
     }
 
     private void readLine() throws IOException {
-        System.out.println(in.readLine());
+        System.out.println(" <<< " + in.readLine());
     }
 
 }

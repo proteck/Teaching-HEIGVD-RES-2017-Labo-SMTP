@@ -15,8 +15,8 @@ public class Launcher {
         // INIT
         Content content = new Content("content/");
         Emails emails = new Emails("mails.txt");
-        Group g1 = emails.pollGroup();
-        Connection connection = new Connection("localhost", 1234);
+        Group g1 = emails.pollGroup(4);
+        Connection connection = new Connection("localhost", 25);
         
         Mail mail = new Mail(g1, content);
         

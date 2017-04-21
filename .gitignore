@@ -10,3 +10,4 @@ buildNumber.properties
 
 nbproject/private
 /build/
+/dist/
