@@ -5,50 +5,75 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
  * @author Maxime Guillod
  */
-public class Content {
+public final class Content {
 
     String folderPath = null;
+    ArrayList<String> content;
     File file = null;
 
-    public Content(String folderPath) {
+    public Content(String folderPath) throws IOException {
         this.folderPath = folderPath;
-        file = getAleaFile();
+        this.content = new ArrayList<>();
+        update();
+    }
+
+    /**
+     * Update the file and the content. In other words, we take another alea content
+     */
+    public void update() throws IOException {
+        updateFile();
+        updateContent();
     }
 
     public String getSubject() {
         return file.getName().replace(".txt", "");
     }
 
-    public ArrayList<String> getContent() throws FileNotFoundException, IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    public ArrayList<String> getContent() {
+        return content;
+    }
+    
+    /**
+     * Update the content
+     *
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    private void updateContent() throws FileNotFoundException, IOException {
+        content.clear();
+
         String line = null;
-        ArrayList<String> content = new ArrayList<>();
-        
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(file)));
+
         while ((line = in.readLine()) != null) {
             content.add(line);
         }
-        return content;
     }
 
-    private File getAleaFile() {
-        LinkedList<File> listFile = new LinkedList<>();
+    /**
+     * Select a new file alea
+     */
+    private void updateFile() {
+        List<File> listFile = new ArrayList<>();
         File folder = new File(folderPath);
 
-        for (File file : folder.listFiles()) {
-            if (file.isFile()) {
-                listFile.add(file);
+        for (File currentFile : folder.listFiles()) {
+            if (currentFile.isFile()) {
+                listFile.add(currentFile);
             }
         }
-        return listFile.get((int) (Math.random() * listFile.size()));
+        // select one of the file into the list
+        file = listFile.get((int) (Math.random() * listFile.size()));
     }
 
 }
