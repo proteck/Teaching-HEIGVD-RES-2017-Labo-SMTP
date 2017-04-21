@@ -10,13 +10,18 @@ import java.util.LinkedList;
 public class Content {
 
     String folderPath = null;
+    File file = null;
 
     public Content(String folderPath) {
         this.folderPath = folderPath;
+        file = getAleaFile();
+    }
+
+    public String getSubject() {
+        return file.getName().replace(".txt", "");
     }
 
     public String[] getAleaContent() {
-        File file = getAleaFile();
         // TODO
         return null;
     }

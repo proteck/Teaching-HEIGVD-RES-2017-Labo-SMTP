@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
 
 /**
@@ -11,30 +6,11 @@ package main;
  */
 public class Mail {
 
-    private String sender = null;
-    private String receiver = null;
-    private String messsage = null;
+    private Group group;
+    private Content content;
 
-    public Mail(String sender, String receiver, String message) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.messsage = message;
+    public Mail(Group victim, Content content) {
+        this.group = victim;
+        this.content = content;
     }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public String getMesssage() {
-        return messsage;
-    }
-
-    public void send() {
-        // TODO
-    }
-
 }

@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Maxime
+ * @author Maxime Guillod
  */
 public class Emails {
 
@@ -41,10 +41,10 @@ public class Emails {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public Queue<String> pollGroup() {
+    public Group pollGroup() {
         return pollGroup(DEFAULT_SIZE_GROUP);
     }
 
@@ -54,14 +54,16 @@ public class Emails {
      * @param groupSize
      * @return
      */
-    public Queue<String> pollGroup(int groupSize) {
+    public Group pollGroup(int groupSize) {
         Queue<String> retour = new LinkedBlockingDeque<>();
         for (int i = 0; i < groupSize; i++) {
             if (!emails.isEmpty()) {
                 retour.add(emails.poll());
+            } else {
+                break;
             }
         }
-        return retour;
+        return new Group(retour);
     }
 
 }

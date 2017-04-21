@@ -1,5 +1,7 @@
 package main;
 
+import java.io.IOException;
+
 /**
  *
  * @author Maxime Guillod
@@ -9,13 +11,18 @@ public class Launcher {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        // INIT
         Content content = new Content("content/");
-        Emails victimes = new Emails("mails.txt");
-
+        Emails emails = new Emails("mails.txt");
+        Group g1 = emails.pollGroup();
+        Connection connection = new Connection("localhost", 1234);
+        
+        Mail mail = new Mail(g1, content);
+        
+        connection.send(mail);
+        
+        // CLOSE ALL
+        connection.close();
     }
-    /*
-    Utiliser l'API de Socket pour implémenter partiellement un serveur SMTP selon le readme
-     */
-
 }
