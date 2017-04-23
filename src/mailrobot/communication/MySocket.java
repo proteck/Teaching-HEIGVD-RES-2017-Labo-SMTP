@@ -13,7 +13,7 @@ import mailrobot.model.Mail;
  *
  * @author Maxime Guillod
  */
-public class Connection extends Socket implements ISmtp {
+public class MySocket extends Socket implements ISmtp {
 
     public static final String SEND_FORM = " >>> ";
     public static final String RECV_FORM = " <<< ";
@@ -21,7 +21,7 @@ public class Connection extends Socket implements ISmtp {
     private final BufferedReader in;
     private final BufferedWriter out;
 
-    public Connection(String host, int port) throws IOException {
+    public MySocket(String host, int port) throws IOException {
         super(host, port);
         out = new BufferedWriter(
                 new OutputStreamWriter(getOutputStream()));

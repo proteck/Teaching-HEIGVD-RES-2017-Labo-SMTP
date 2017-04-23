@@ -1,11 +1,11 @@
 package mailrobot;
 
-import mailrobot.model.Mail;
-import mailrobot.model.Emails;
-import mailrobot.model.Content;
-import mailrobot.model.Group;
-import mailrobot.communication.Connection;
 import java.io.IOException;
+import mailrobot.communication.MySocket;
+import mailrobot.model.Content;
+import mailrobot.model.Emails;
+import mailrobot.model.Group;
+import mailrobot.model.Mail;
 
 /**
  *
@@ -29,7 +29,7 @@ public class Launcher {
         Content content = new Content(CONTENT_PATH);
         Emails emails = new Emails(MAILS_PATH);
 
-        try (Connection connection = new Connection(SERVER_ADDR, SERVER_PORT)) {
+        try (MySocket mySocket = new MySocket(SERVER_ADDR, SERVER_PORT)) {
             Mail mail;
             Group group;
             while (true) {
@@ -43,13 +43,13 @@ public class Launcher {
                 // init the mail
                 mail = new Mail(group, content);
                 // send it
-                connection.send(mail);
+                mySocket.send(mail);
                 
                 // Avoid to receive many mail in the same seconde
                 Thread.sleep(200);
             }
             // CLOSE ALL
-            connection.close();
+            mySocket.close();
         }
     }
 }

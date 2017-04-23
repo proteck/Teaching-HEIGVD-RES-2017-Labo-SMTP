@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Maxime Guillod
  */
-public final class Content {
+public class Content {
 
     String folderPath = null;
     ArrayList<String> content;
