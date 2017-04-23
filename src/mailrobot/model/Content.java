@@ -1,4 +1,4 @@
-package main;
+package mailrobot.model;
 
 import java.io.BufferedReader;
 import java.io.File;

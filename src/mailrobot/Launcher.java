@@ -1,5 +1,10 @@
-package main;
+package mailrobot;
 
+import mailrobot.model.Mail;
+import mailrobot.model.Emails;
+import mailrobot.model.Content;
+import mailrobot.model.Group;
+import mailrobot.communication.Connection;
 import java.io.IOException;
 
 /**

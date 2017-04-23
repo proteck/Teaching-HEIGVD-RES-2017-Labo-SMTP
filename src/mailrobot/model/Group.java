@@ -1,4 +1,4 @@
-package main;
+package mailrobot.model;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  *
  * @author Maxime Guillod
  */
-class Group {
+public class Group {
 
     private final String sender;
     private Queue<String> receiver;

@@ -1,4 +1,4 @@
-package main;
+package mailrobot.communication;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import mailrobot.model.Mail;
 
 /**
  * Connection which extends Sockets and add the posibility to send mail
  *
  * @author Maxime Guillod
  */
-public class Connection extends Socket implements ICommunictionSmtp {
+public class Connection extends Socket implements ISmtp {
 
     public static final String SEND_FORM = " >>> ";
     public static final String RECV_FORM = " <<< ";
@@ -37,7 +38,7 @@ public class Connection extends Socket implements ICommunictionSmtp {
      */
     public void send(Mail mail) throws IOException {
         // Init connection
-        send(HELLO);
+        send(CMD_HELLO);
         readLine();
         readLine();
         readLine();
@@ -47,11 +48,11 @@ public class Connection extends Socket implements ICommunictionSmtp {
              * SEND MAIL
              */
             // Param for the server
-            send(MAIL_FROM + mail.getSender());
+            send(CMD_MAIL_FROM + mail.getSender());
             readLine();
-            send(MAIL_RCP + mail.getReceiver().peek());
+            send(CMD_MAIL_RCP + mail.getReceiver().peek());
             readLine();
-            send(DATA);
+            send(CMD_DATA);
             readLine();
             // Header
             send(HEADER_FROM + mail.getSender());
@@ -63,7 +64,7 @@ public class Connection extends Socket implements ICommunictionSmtp {
                 send(line);
             }
             // End Content & send mail
-            send(END_DATA);
+            send(CMD_END_DATA);
             readLine();
         }
 

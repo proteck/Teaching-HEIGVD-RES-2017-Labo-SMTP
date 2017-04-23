@@ -1,4 +1,4 @@
-package main;
+package mailrobot.model;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;
+import mailrobot.Launcher;
 
 /**
  * List of all mails adresse store in a file
